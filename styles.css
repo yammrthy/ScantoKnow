@@ -136,6 +136,37 @@ h1 {
 .contact-link:hover {
     text-decoration: underline; 
 }
+/* Basic Tooltip Style */
+.pointer-label {
+    position: relative;
+    cursor: pointer;
+}
+
+/* Tooltip container */
+.pointer-label::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    visibility: hidden;
+    opacity: 0;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+/* Show tooltip when hovering over the pointer label */
+.pointer-label:hover::after {
+    visibility: visible;
+    opacity: 1;
+}
 
 
 @media (max-width: 768px) {
