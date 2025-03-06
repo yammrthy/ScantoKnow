@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>32-A Crane</title>
+    <link rel="icon" type="image/x-icon" href="imgs\crane.png">
+    <style>
+        body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 10px;
+      box-sizing: border-box;
+      position: relative;
+  }
+
+  .menu {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+  }
+
+  .menu-button {
+      background: #17469e;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+  }
+
+  .menu-options {
+      display: none;
+      position: absolute;
+      top: 40px;
+      right: 0;
+      background: white;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      width: 150px;
+  }
+
+  .menu-options a {
+      display: block;
+      padding: 10px;
+      text-decoration: none;
+      color: #333;
+  }
+
+  .menu-options a:hover {
+      background: #f4f4f4;
+  }
+
+  .container {
+      width: 100%;
+      max-width: 500px;
+      background: white;
+      padding: 20px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      text-align: center;
+  }
+
+  h1 {
+      color: #333;
+      font-size: 24px;
+  }
+
+  .details {
+      text-align: left;
+      margin-top: 20px;
+  }
+
+  .details p {
+      margin: 5px 0;
+      font-size: 16px;
+  }
+
+  .critical {
+      color: red;
+      font-weight: bold;
+  }
+
+  .maintenance {
+      margin-top: 20px;
+      padding: 10px;
+      background: #e9ecef;
+      border-radius: 5px;
+  }
+
+  .maintenance h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+  }
+
+  .maintenance ul {
+      list-style-type: none;
+      padding: 0;
+  }
+
+  .maintenance li {
+      background: white;
+      padding: 8px;
+      margin: 5px 0;
+      border-radius: 5px;
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .button-container {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+  }
+
+  .button-container button {
+      flex: 1;
+      padding: 10px;
+      background: #17469e;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      text-align: center;
+  }
+
+  .button-container button:hover {
+      background: #0056b3;
+  }
+
+  /* Report selection modal */
+  .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+  }
+
+  .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 5px;
+      text-align: center;
+      width: 300px;
+  }
+
+  .modal-content button {
+      margin: 5px;
+      padding: 10px;
+      width: 100%;
+      background: #17469e;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+  }
+
+  .modal-content button:hover {
+      background: #0056b3;
+  }
+
+  @media (max-width: 600px) {
+      .container {
+          padding: 15px;
+      }
+
+      h1 {
+          font-size: 20px;
+      }
+
+      .details p {
+          font-size: 14px;
+      }
+
+      .button-container {
+          flex-direction: column;
+      }
+  }
+
+</style>
+<script>
+  function toggleMenu() {
+      var menu = document.getElementById("menu-options");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+  }
+
+  function openFilteredReport(crane) {
+      const baseUrl = "https://jsw-my.sharepoint.com/:x:/g/personal/cmd_conference_jsw_in/EYHj0ccEXFxKoFGNojFk3nUB55T8P7hW3jX4chH4xN0Zrg?e=aIOCST";
+      
+      // Encoding the crane name for the URL
+      const filterParam = encodeURIComponent(crane);
+      
+      // Construct the URL with the filter
+      const excelReportURL = `${baseUrl}&filter=${filterParam}`;
+      
+      // Open the OneDrive report with filtering applied
+      window.open(excelReportURL, "_blank");
+  }
+</script>
+    <script>
+        function verifyCode() {
+            var allowedCodes = ["1100750", "1406"]; 
+            var userCode = document.getElementById("employeeCode").value;
+
+            if (allowedCodes.includes(userCode)) {
+                document.getElementById("verification").style.display = "none"; 
+                document.getElementById("content").style.display = "block"; 
+            } else {
+                alert("Invalid Code! Employee Denied.");
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Verification Section -->
+    <div id="verification">
+        <h2>Enter Employee Code</h2>
+        <input type="text" id="employeeCode" placeholder="Enter your code" required>
+        <button onclick="verifyCode()">Submit</button>
+    </div>
+
+    <!-- Protected Content (Hidden by Default) -->
+    <div id="content" style="display: none;">
+        <div class="menu">
+            <button class="menu-button" onclick="toggleMenu()">☰</button>
+            <div class="menu-options" id="menu-options">
+                <a href="index.html">HSM-1</a>
+                <a href="#">BF-1</a>
+                <a href="#">BF-2</a>
+                <a href="#">BF-3</a>
+                <a href="#">BF-4</a>
+                <a href="#">COREX-1</a>
+                <a href="#">COREX-2</a>
+                <a href="#">LRS</a>
+                <a href="#">SP-2</a>
+                <a href="#">PP-1</a>
+            </div>
+        </div>
+        <div class="container">
+            <h1>32-A CRANE</h1>
+            <div class="details">
+                <p><strong>Plant:</strong> HSM-1</p>
+                <p><strong>Location:</strong> SLAB YARD</p>
+                <p><strong>Capacity:</strong> 100T</p>
+                <p><strong>Type:</strong> <span class="critical">CRITICAL</span></p>
+                <p><strong>Motor Make:</strong> SIEMENS</p>
+                <p><strong>Motor Type:</strong> SQUIRREL CAGE</p>
+                <p><strong>Drive Make:</strong> SIEMENS</p>
+                <p><strong>Motion:</strong> MH, AH, CT, LT1, LT2</p>
+            </div>
+            <div class="maintenance">
+                <h2>Maintenance History</h2>
+                <ul>
+                    <li>Last Maintenance: 03 March 2025 </li>
+                    <li>Previous Maintenance: 18 Feb 2025</li>
+                    <li>Next Scheduled: None</li>
+                </ul>
+            </div>
+            <div class="button-container">
+                <button onclick="window.open('Mechanical.pdf', '_blank')">Mechanical Diagram</button>
+                <button onclick="window.open('Electrical/32-A.pdf', '_blank')">Electrical Diagram</button>
+                <button onclick="showReportOptions()">Report</button>
+            </div>
+        </div>
+        <div class="modal" id="reportModal">
+            <div class="modal-content">
+                <h2>Select Report Type</h2>
+                <button onclick="openReport('BDreport')">BD Report</button>
+                <button onclick="openReport('onedrive')">Onedrive Report</button>
+                <button onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    
+        <script>
+            function showReportOptions() {
+                document.getElementById("reportModal").style.display = "flex";
+            }
+    
+            function closeModal() {
+                document.getElementById("reportModal").style.display = "none";
+            }
+    
+            function openReport(type) {
+                let craneID = "32-A";  // You can dynamically get this from the page
+                let oneDriveLinks = {
+                    "BDreport": "https://jsw-my.sharepoint.com/:x:/g/personal/yamuna_m_jsw_in/EU5R6Z0OrBJPhCyx8rpQrBgBRYdX3FC3TMsfmNqOtQCSDw?e=Qbmt3s",
+                    "onedrive": "https://jsw-my.sharepoint.com/shared?id=%2Fpersonal%2Fcmd%5Fconference%5Fjsw%5Fin%2FDocuments%2FEOT%20CRANES%20REPORTS&listurl=%2Fpersonal%2Fcmd%5Fconference%5Fjsw%5Fin%2FDocuments"
+                };
+    
+                let url = oneDriveLinks[type];
+                if (url) {
+                    window.open(url, "_blank");
+                } else {
+                    alert("Report not available.");
+                }
+    
+                closeModal();
+            }
+        </script>
+    
+    </div>
+
+    
+</body>
+</html>
