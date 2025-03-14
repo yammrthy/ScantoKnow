@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>32-C Crane</title>
+    <title>32C Crane</title>
     <link rel="icon" type="image/x-icon" href="imgs\crane.png">
     <style>
-        body {
+    
+    body {
       font-family: Arial, sans-serif;
       background-color: #f4f4f4;
       display: flex;
@@ -55,6 +56,68 @@
   .menu-options a:hover {
       background: #f4f4f4;
   }
+   /* Login Form */
+   .login-container {
+            background: white;
+            padding: 30px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+            max-width: 350px;
+            width: 100%;
+        }
+
+        .login-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .login-container {
+    text-align: center;
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-container input {
+    width: 90%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+        .login-container input:focus {
+            border-color: #17469e;
+            outline: none;
+        }
+
+        .login-container button {
+            width: 100%;
+            background: #17469e;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .login-container button:hover {
+            background: #0056b3;
+        }
+
 
   .container {
       width: 100%;
@@ -197,38 +260,40 @@
 
   function openFilteredReport(crane) {
       const baseUrl = "https://jsw-my.sharepoint.com/:x:/g/personal/cmd_conference_jsw_in/EYHj0ccEXFxKoFGNojFk3nUB55T8P7hW3jX4chH4xN0Zrg?e=aIOCST";
-      
-      // Encoding the crane name for the URL
+    
       const filterParam = encodeURIComponent(crane);
-      
-      // Construct the URL with the filter
       const excelReportURL = `${baseUrl}&filter=${filterParam}`;
-      
-      // Open the OneDrive report with filtering applied
       window.open(excelReportURL, "_blank");
   }
 </script>
-    <script>
-        function verifyCode() {
-            var allowedCodes = ["1100750", "1406"]; 
-            var userCode = document.getElementById("employeeCode").value;
+<script>
+    function verifyCode() {
+        var credentials = {
+            "1100750": "1406",
+            "1406": "1406"
+        };
 
-            if (allowedCodes.includes(userCode)) {
-                document.getElementById("verification").style.display = "none"; 
-                document.getElementById("content").style.display = "block"; 
-            } else {
-                alert("Invalid Code! Employee Denied.");
-            }
+        var userCode = document.getElementById("employeeCode").value;
+        var userPassword = document.getElementById("employeePassword").value;
+
+        if (credentials[userCode] && credentials[userCode] === userPassword) {
+            document.getElementById("verification").style.display = "none";
+            document.getElementById("content").style.display = "block";
+        } else {
+            alert("Invalid Code or Password! Access Denied.");
         }
-    </script>
+    }
+</script>
 </head>
 <body>
 
-    <!-- Verification Section -->
-    <div id="verification">
-        <h2>Enter Employee Code</h2>
-        <input type="text" id="employeeCode" placeholder="Enter your code" required>
-        <button onclick="verifyCode()">Submit</button>
+<!-- Login Form -->
+<div id="verification" class="login-container">
+    <h2>Enter Employee Credentials</h2>
+    <input type="text" id="employeeCode" placeholder="Enter your code" required>
+    <input type="password" id="employeePassword" placeholder="Enter your password" required>
+    <button onclick="verifyCode()">Submit</button>
+</div>
     </div>
 
     <!-- Protected Content (Hidden by Default) -->
@@ -269,8 +334,8 @@
                 </ul>
             </div>
             <div class="button-container">
-                <button onclick="window.open('Mechanical.pdf', '_blank')">Mechanical Diagram</button>
                 <button onclick="window.open('Electrical/32-C.pdf', '_blank')">Electrical Diagram</button>
+                <button onclick="window.open('Checklist.pdf', '_blank')">Checklist</button>
                 <button onclick="showReportOptions()">Report</button>
             </div>
         </div>
@@ -293,7 +358,7 @@
             }
     
             function openReport(type) {
-                let craneID = "32-C";  // You can dynamically get this from the page
+                let craneID = "32-C";  
                 let oneDriveLinks = {
                     "BDreport": "https://jsw-my.sharepoint.com/:x:/g/personal/yamuna_m_jsw_in/EU5R6Z0OrBJPhCyx8rpQrBgBRYdX3FC3TMsfmNqOtQCSDw?e=Qbmt3s",
                     "onedrive": "https://jsw-my.sharepoint.com/shared?id=%2Fpersonal%2Fcmd%5Fconference%5Fjsw%5Fin%2FDocuments%2FEOT%20CRANES%20REPORTS&listurl=%2Fpersonal%2Fcmd%5Fconference%5Fjsw%5Fin%2FDocuments"
